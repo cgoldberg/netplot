@@ -1,0 +1,39 @@
+<project name="netplot" default="all">
+    
+    <property name="src" value="src"/>
+    <property name="lib" value="${src}/lib"/>
+    <property name="build" value="build"/>
+  
+    
+    <target name="all" depends="compile"/>
+
+    
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    
+    <target name="init" depends="clean">
+        <mkdir dir="${build}"/>
+    </target>
+    
+    
+    <target name="copy-resources" depends="init">
+        <copy todir="${build}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    
+    <target name="compile" depends="copy-resources">
+        <javac destdir="${build}" deprecation="true">
+            <src path="${src}"/>
+            <classpath>
+                <fileset dir="${lib}" includes="*.jar,*.zip" />
+            </classpath>
+        </javac>
+    </target>
+
+</project>
